@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Начинаю предзагрузку изображений...');
         
         const images = [
-            'https://ibb.co/5XFtG8GT',  // Аватар проекта
-            'https://ibb.co/q3MH0LBT'   // Аватар Инквизитора
+            'https://i.ibb.co/5XFtG8GT/default-avatar.jpg',  // Аватар проекта
+            'https://i.ibb.co/q3MH0LBT/default-avatar.jpg'   // Аватар Инквизитора
         ];
         
         let loadedCount = 0;
@@ -275,28 +275,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация дополнительных эффектов
     setTimeout(addInquisitionEffects, 1000);
     
-    // Обработка ошибок загрузки изображений с улучшенным fallback
-    function handleImageErrors() {
-        const images = document.querySelectorAll('img');
-        images.forEach(img => {
-            img.addEventListener('error', function() {
-                console.error(`Ошибка загрузки изображения: ${this.src}`);
-                
-                // Проверяем, какое именно изображение не загрузилось
-                if (this.classList.contains('logo-img')) {
-                    console.log('Не удалось загрузить аватар проекта. URL:', this.src);
-                    console.log('Проверьте: https://ibb.co/5XFtG8GT');
-                } else if (this.classList.contains('profile-img')) {
-                    console.log('Не удалось загрузить аватар Инквизитора. URL:', this.src);
-                    console.log('Проверьте: https://ibb.co/q3MH0LBT');
-                }
-            });
-        });
-    }
-    
-    // Инициализация обработки ошибок изображений
-    handleImageErrors();
-    
     // Плавный скролл для всех якорных ссылок
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -371,23 +349,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация управления историей
     manageHistory();
     
-    // Добавление favicon динамически
-    function addFavicon() {
-        const link = document.createElement('link');
-        link.rel = 'icon';
-        link.href = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23B22222%22>⚔️</text></svg>';
-        document.head.appendChild(link);
-    }
-    
-    addFavicon();
-    
     // Отладочная информация в консоль
     console.log('Сайт "Инквизиция" успешно загружен!');
-    console.log('Проверка изображений:');
-    console.log('- Аватар проекта: https://imgfoto.host/i/OHlVDn');
-    console.log('- Аватар Инквизитора: https://imgfoto.host/i/OHNXpd');
-    console.log('Если изображения не отображаются:');
-    console.log('1. Проверьте URL в браузере');
-    console.log('2. Убедитесь в доступности изображений');
-    console.log('3. Проверьте консоль на наличие CORS ошибок');
+    console.log('URL изображений:');
+    console.log('- Аватар проекта: https://i.ibb.co/5XFtG8GT/default-avatar.jpg');
+    console.log('- Аватар Инквизитора: https://i.ibb.co/q3MH0LBT/default-avatar.jpg');
 });
