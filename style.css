@@ -472,12 +472,6 @@ body {
     min-width: 200px;
 }
 
-.btn-write {
-    background: linear-gradient(135deg, #8B0000, #FF0000);
-    color: white;
-    min-width: 200px;
-}
-
 /* Футер */
 .site-footer {
     position: fixed;
@@ -595,7 +589,7 @@ body {
         gap: 15px;
     }
     
-    .btn-reputation, .btn-price, .btn-write {
+    .btn-reputation, .btn-price {
         width: 100%;
         max-width: 400px;
         min-width: unset;
