@@ -171,16 +171,17 @@ body {
     border: 3px solid rgba(255, 255, 255, 0.2);
 }
 
-.logo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
+/* Иконка проекта (заменяет изображение) */
+.logo-icon {
+    font-size: 80px;
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
 }
 
-.logo-img:hover {
-    transform: scale(1.05);
+.logo-image:hover .logo-icon {
+    transform: scale(1.1);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
 @keyframes pulse {
@@ -356,6 +357,10 @@ body {
     border: 3px solid rgba(139, 0, 0, 0.3);
     position: relative;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #8B0000, #B22222);
 }
 
 .owner-photo:hover {
@@ -364,15 +369,17 @@ body {
     border-color: rgba(178, 34, 34, 0.5);
 }
 
-.profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
+/* Иконка инквизитора (заменяет изображение) */
+.profile-icon {
+    font-size: 120px;
+    color: white;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
 }
 
-.owner-photo:hover .profile-img {
-    transform: scale(1.05);
+.owner-photo:hover .profile-icon {
+    transform: scale(1.1);
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.9);
 }
 
 .owner-title {
@@ -561,6 +568,14 @@ body {
         width: 160px;
         height: 160px;
     }
+    
+    .profile-icon {
+        font-size: 100px;
+    }
+    
+    .logo-icon {
+        font-size: 70px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -635,6 +650,14 @@ body {
         height: 140px;
     }
     
+    .profile-icon {
+        font-size: 90px;
+    }
+    
+    .logo-icon {
+        font-size: 60px;
+    }
+    
     /* Кнопка создателя - адаптивность */
     .creator-btn {
         top: 15px;
@@ -686,6 +709,14 @@ body {
     .logo-image {
         width: 120px;
         height: 120px;
+    }
+    
+    .profile-icon {
+        font-size: 80px;
+    }
+    
+    .logo-icon {
+        font-size: 50px;
     }
     
     /* Кнопка создателя - адаптивность */
