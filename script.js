@@ -149,16 +149,67 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initCircleAnimations();
     
+    // Проверка загрузки изображений
+    function checkImageLoading() {
+        console.log('Проверка загрузки изображений...');
+        
+        const projectAvatar = document.querySelector('.logo-img');
+        const ownerAvatar = document.querySelector('.profile-img');
+        
+        if (projectAvatar) {
+            console.log('Аватар проекта URL:', projectAvatar.src);
+            projectAvatar.addEventListener('load', function() {
+                console.log('✓ Аватар проекта загружен');
+            });
+            projectAvatar.addEventListener('error', function() {
+                console.log('✗ Ошибка загрузки аватара проекта');
+            });
+        }
+        
+        if (ownerAvatar) {
+            console.log('Аватар Инквизитора URL:', ownerAvatar.src);
+            ownerAvatar.addEventListener('load', function() {
+                console.log('✓ Аватар Инквизитора загружен');
+            });
+            ownerAvatar.addEventListener('error', function() {
+                console.log('✗ Ошибка загрузки аватара Инквизитора');
+            });
+        }
+    }
+    
+    setTimeout(checkImageLoading, 1000);
+    
     // Предзагрузка изображений для плавного отображения
     function preloadImages() {
+        console.log('Начинаю предзагрузку изображений...');
+        
         const images = [
-            'https://imgfoto.host/i/OHNXpd',  // Аватар Инквизитора
-            'https://imgfoto.host/i/OHlVDn'   // Аватар проекта
+            'https://imgfoto.host/i/OHlVDn',  // Аватар проекта
+            'https://imgfoto.host/i/OHNXpd'   // Аватар Инквизитора
         ];
         
-        images.forEach(src => {
+        let loadedCount = 0;
+        
+        images.forEach((src, index) => {
             const img = new Image();
             img.src = src;
+            img.onload = function() {
+                loadedCount++;
+                console.log(`✓ Изображение ${index + 1} загружено:`, src);
+                
+                if (loadedCount === images.length) {
+                    console.log('Все изображения успешно загружены!');
+                }
+            };
+            img.onerror = function() {
+                console.log(`✗ Ошибка загрузки изображения ${index + 1}:`, src);
+                console.log('Проверьте URL и доступность изображения');
+                console.log('Рекомендации:');
+                console.log('1. Проверьте правильность URL');
+                console.log('2. Убедитесь, что изображение доступно публично');
+                console.log('3. Попробуйте открыть URL в браузере');
+                console.log('4. Проверьте, не блокируется ли загрузка CORS политикой');
+            };
         });
     }
     
@@ -224,17 +275,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация дополнительных эффектов
     setTimeout(addInquisitionEffects, 1000);
     
-    // Обработка ошибок загрузки изображений
+    // Обработка ошибок загрузки изображений с улучшенным fallback
     function handleImageErrors() {
         const images = document.querySelectorAll('img');
         images.forEach(img => {
             img.addEventListener('error', function() {
                 console.error(`Ошибка загрузки изображения: ${this.src}`);
-                // Замена на стандартное изображение при ошибке
+                
+                // Проверяем, какое именно изображение не загрузилось
                 if (this.classList.contains('logo-img')) {
-                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iOTAiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8xMjFfNTMpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfMTIxXzUzIiB4MT0iMCIgeTE9IjAiIHgyPSIxODAiIHkyPSIxODAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEzOTAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNCMDg4ODgiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K';
+                    console.log('Не удалось загрузить аватар проекта. URL:', this.src);
+                    console.log('Проверьте: https://imgfoto.host/i/OHlVDn');
                 } else if (this.classList.contains('profile-img')) {
-                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODAiIGhlaWdodD0iMjgwIiByeD0iMjAiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8xMjFfNTMpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfMTIxXzUzIiB4MT0iMCIgeTE9IjAiIHgyPSIyODAiIHkyPSIyODAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEzOTAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNCMDg4ODgiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K';
+                    console.log('Не удалось загрузить аватар Инквизитора. URL:', this.src);
+                    console.log('Проверьте: https://imgfoto.host/i/OHNXpd');
                 }
             });
         });
@@ -326,4 +380,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     addFavicon();
+    
+    // Отладочная информация в консоль
+    console.log('Сайт "Инквизиция" успешно загружен!');
+    console.log('Проверка изображений:');
+    console.log('- Аватар проекта: https://imgfoto.host/i/OHlVDn');
+    console.log('- Аватар Инквизитора: https://imgfoto.host/i/OHNXpd');
+    console.log('Если изображения не отображаются:');
+    console.log('1. Проверьте URL в браузере');
+    console.log('2. Убедитесь в доступности изображений');
+    console.log('3. Проверьте консоль на наличие CORS ошибок');
 });
