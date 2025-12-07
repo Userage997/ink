@@ -285,10 +285,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Проверяем, какое именно изображение не загрузилось
                 if (this.classList.contains('logo-img')) {
                     console.log('Не удалось загрузить аватар проекта. URL:', this.src);
-                    console.log('Проверьте: https://imgfoto.host/i/OHlVDn');
+                    console.log('Проверьте: https://ibb.co/5XFtG8GT');
                 } else if (this.classList.contains('profile-img')) {
                     console.log('Не удалось загрузить аватар Инквизитора. URL:', this.src);
-                    console.log('Проверьте: https://imgfoto.host/i/OHNXpd');
+                    console.log('Проверьте: https://ibb.co/q3MH0LBT');
                 }
             });
         });
