@@ -184,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Начинаю предзагрузку изображений...');
         
         const images = [
-            'https://imgfoto.host/i/OHlVDn',  // Аватар проекта
-            'https://imgfoto.host/i/OHNXpd'   // Аватар Инквизитора
+            'https://ibb.co/5XFtG8GT',  // Аватар проекта
+            'https://ibb.co/q3MH0LBT'   // Аватар Инквизитора
         ];
         
         let loadedCount = 0;
