@@ -151,18 +151,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Предзагрузка изображений для плавного отображения
     function preloadImages() {
-    const images = [
-        'https://imgfoto.host/i/OHNXpd',  // Аватар Инквизитора
-        'https://imgfoto.host/i/OHlVDn'   // Аватар проекта
-    ];
+        const images = [
+            'https://imgfoto.host/i/OHNXpd',  // Аватар Инквизитора
+            'https://imgfoto.host/i/OHlVDn'   // Аватар проекта
+        ];
+        
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
     
-    images.forEach(src => {
-        const img = new Image();
-        img.src = src;
-    });
-}
-
-preloadImages();
+    preloadImages();
     
     // Дополнительные эффекты для тематики "Инквизиция"
     function addInquisitionEffects() {
@@ -171,9 +171,23 @@ preloadImages();
         if (logoImg) {
             logoImg.addEventListener('mouseenter', function() {
                 this.style.filter = 'drop-shadow(0 0 15px rgba(178, 34, 34, 0.7))';
+                this.style.transition = 'filter 0.3s ease';
             });
             
             logoImg.addEventListener('mouseleave', function() {
+                this.style.filter = 'none';
+            });
+        }
+        
+        // Добавляем свечение к аватару Инквизитора при наведении
+        const profileImg = document.querySelector('.profile-img');
+        if (profileImg) {
+            profileImg.addEventListener('mouseenter', function() {
+                this.style.filter = 'drop-shadow(0 0 20px rgba(139, 0, 0, 0.8))';
+                this.style.transition = 'filter 0.3s ease';
+            });
+            
+            profileImg.addEventListener('mouseleave', function() {
                 this.style.filter = 'none';
             });
         }
@@ -182,15 +196,134 @@ preloadImages();
         const projectTitle = document.querySelector('.project-title-line');
         if (projectTitle) {
             setInterval(() => {
+                const intensity = 0.5 + Math.random() * 0.5;
+                const redIntensity = 0.3 + Math.random() * 0.3;
+                const darkRedIntensity = 0.2 + Math.random() * 0.2;
+                
                 projectTitle.style.textShadow = `
-                    0 0 10px rgba(255, 69, 0, ${0.5 + Math.random() * 0.5}),
-                    0 0 20px rgba(255, 0, 0, ${0.3 + Math.random() * 0.3}),
-                    0 0 30px rgba(139, 0, 0, ${0.2 + Math.random() * 0.2})
+                    0 0 10px rgba(255, 69, 0, ${intensity}),
+                    0 0 20px rgba(255, 0, 0, ${redIntensity}),
+                    0 0 30px rgba(139, 0, 0, ${darkRedIntensity})
                 `;
             }, 1000);
         }
+        
+        // Добавляем эффект свечения к кнопкам при наведении
+        const btns = document.querySelectorAll('.btn-primary, .btn-reputation');
+        btns.forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 15px 30px rgba(139, 0, 0, 0.4)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
+            });
+        });
     }
     
     // Инициализация дополнительных эффектов
     setTimeout(addInquisitionEffects, 1000);
+    
+    // Обработка ошибок загрузки изображений
+    function handleImageErrors() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.addEventListener('error', function() {
+                console.error(`Ошибка загрузки изображения: ${this.src}`);
+                // Замена на стандартное изображение при ошибке
+                if (this.classList.contains('logo-img')) {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iOTAiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8xMjFfNTMpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfMTIxXzUzIiB4MT0iMCIgeTE9IjAiIHgyPSIxODAiIHkyPSIxODAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEzOTAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNCMDg4ODgiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K';
+                } else if (this.classList.contains('profile-img')) {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODAiIGhlaWdodD0iMjgwIiByeD0iMjAiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8xMjFfNTMpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfMTIxXzUzIiB4MT0iMCIgeTE9IjAiIHgyPSIyODAiIHkyPSIyODAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEzOTAwMCIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNCMDg4ODgiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K';
+                }
+            });
+        });
+    }
+    
+    // Инициализация обработки ошибок изображений
+    handleImageErrors();
+    
+    // Плавный скролл для всех якорных ссылок
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Анимация появления элементов при скролле
+    function animateOnScroll() {
+        const elements = document.querySelectorAll('.description-section, .skills-list li');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        elements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(element);
+        });
+    }
+    
+    // Инициализация анимации при скролле
+    setTimeout(animateOnScroll, 1500);
+    
+    // Управление историей браузера
+    function manageHistory() {
+        // При переходе на второй экран добавляем в историю
+        aboutOwnerBtn.addEventListener('click', function() {
+            history.pushState({ screen: 'about' }, '', '#about');
+        });
+        
+        // При возврате на первый экран добавляем в историю
+        backBtn.addEventListener('click', function() {
+            history.pushState({ screen: 'home' }, '', '#home');
+        });
+        
+        // Обработка кнопок назад/вперед браузера
+        window.addEventListener('popstate', function(event) {
+            if (window.location.hash === '#about' || (event.state && event.state.screen === 'about')) {
+                aboutOwnerBtn.click();
+            } else {
+                backBtn.click();
+            }
+        });
+        
+        // Проверяем начальный хэш в URL
+        if (window.location.hash === '#about') {
+            setTimeout(() => aboutOwnerBtn.click(), 100);
+        }
+    }
+    
+    // Инициализация управления историей
+    manageHistory();
+    
+    // Добавление favicon динамически
+    function addFavicon() {
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.href = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23B22222%22>⚔️</text></svg>';
+        document.head.appendChild(link);
+    }
+    
+    addFavicon();
 });
