@@ -151,17 +151,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Предзагрузка изображений для плавного отображения
     function preloadImages() {
-        const images = [
-            'https://imgfoto.host/i/OHNXpd'
-        ];
-        
-        images.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
-    }
+    const images = [
+        'https://imgfoto.host/i/OHNXpd',  // Аватар Инквизитора
+        'https://imgfoto.host/i/OHlVDn'   // Аватар проекта
+    ];
     
-    preloadImages();
+    images.forEach(src => {
+        const img = new Image();
+        img.src = src;
+    });
+}
+
+preloadImages();
     
     // Дополнительные эффекты для тематики "Инквизиция"
     function addInquisitionEffects() {
